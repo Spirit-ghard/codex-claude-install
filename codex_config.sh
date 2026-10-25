@@ -27,4 +27,18 @@ write_config() {
 
 write_config "$auth_b64" "$codex_dir/auth.json"
 write_config "$config_b64" "$codex_dir/config.toml"
+
+bashrc="$HOME/.bashrc"
+marker_start="# >>> codex-claude-install: codex aliases >>>"
+marker_end="# <<< codex-claude-install: codex aliases <<<"
+touch "$bashrc"
+if ! grep -Fqx 'alias codexp="codex --dangerously-bypass-approvals-and-sandbox"' "$bashrc" 2>/dev/null; then
+  {
+    printf '\n%s\n' "$marker_start"
+    printf '%s\n' 'alias codexp="codex --dangerously-bypass-approvals-and-sandbox"'
+    printf '%s\n' "$marker_end"
+  } >> "$bashrc"
+fi
+
 echo "Codex configuration written to $codex_dir"
+echo "Added codexp alias to $bashrc (run: source ~/.bashrc)"

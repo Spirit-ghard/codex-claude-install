@@ -19,4 +19,18 @@ fi
 decode_base64 "$settings_b64" > "$temp"
 chmod 600 "$temp"
 mv "$temp" "$target"
+
+bashrc="$HOME/.bashrc"
+marker_start="# >>> codex-claude-install: claude aliases >>>"
+marker_end="# <<< codex-claude-install: claude aliases <<<"
+touch "$bashrc"
+if ! grep -Fqx 'alias claudep="claude --dangerously-skip-permissions"' "$bashrc" 2>/dev/null; then
+  {
+    printf '\n%s\n' "$marker_start"
+    printf '%s\n' 'alias claudep="claude --dangerously-skip-permissions"'
+    printf '%s\n' "$marker_end"
+  } >> "$bashrc"
+fi
+
 echo "Claude Code configuration written to $target"
+echo "Added claudep alias to $bashrc (run: source ~/.bashrc)"
