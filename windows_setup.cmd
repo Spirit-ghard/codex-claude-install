@@ -24,13 +24,13 @@ if not exist "%BASH_EXE%" (
 )
 
 pushd "%~dp0"
-"%BASH_EXE%" ./install_codex.sh
+"%BASH_EXE%" ./codex_install.sh
 if errorlevel 1 goto :failed
-"%BASH_EXE%" ./install_claude.sh
+"%BASH_EXE%" ./claude_install.sh
 if errorlevel 1 goto :failed
-"%BASH_EXE%" ./configure_codex.sh
+"%BASH_EXE%" ./codex_config.sh
 if errorlevel 1 goto :failed
-"%BASH_EXE%" ./configure_claude.sh
+"%BASH_EXE%" ./claude_config.sh
 if errorlevel 1 goto :failed
 popd
 echo Codex and Claude Code are installed and configured.
